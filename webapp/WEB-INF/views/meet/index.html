@@ -1,0 +1,193 @@
+﻿<!-- Demo version: 2018.11.16 -->
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta property="og:url" content="https://thinknormal.iptime.org:8443/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="라이브챗 Meet Me Live">
+  <meta property="og:image" content="pr.gif">
+  <meta property="og:description" content="세 명 정도는 가뿐?하게 무료로 영상채팅을 할 수 있습니다.">
+  <link rel="shortcut icon" href="/webapp/WEB-INF/views/meet/favicon.ico">
+  
+  <title>라이브챗 Meet Me Live</title>
+  <meta name="description" content="WebRTC Dashboard .">
+  <link href="/webapp/WEB-INF/views/meet/css/bootstrap.min.css?version=test" rel="stylesheet">
+  <!-- main -->
+  <link href="/webapp/WEB-INF/views/meet/css/meet_index.css" rel="stylesheet">
+</head>
+
+<body>
+  <header>
+    <div style="padding: 10px 0 0 20px;">
+      <button id="openPop" class="btn btn-primary" data-toggle="modal" data-target="#startRoomModel">회의 개설하기</button>
+      <span id="btn-show-join-hidden-room" data-toggle="modal" data-target="#joinRoomModel"></span>
+      <span class="top-span"> 회의 중 : <span id="active-rooms">0</span></span>
+    </div>
+  </header>
+
+    <div class="modal fade" id="startRoomModel" tabindex="-1" role="dialog" aria-labelledby="startRoomModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="startRoomModelLabel">새로운 방 개설하기</h5>
+              
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+              
+            <div class="form-group">
+              <p>
+                <label for="txt-roomid" class="col-form-label">회의 제목:</label>
+                <input type="text" class="form-control" id="txt-roomid" placeholder="목록에 표시할 대화방 이름을 입력하세요">
+              </p>
+
+              <p>
+                <label for="txt-roomTitle" class="col-form-label">회의 개요 등록:</label>
+                <input type="text" class="form-control" id="txt-roomTitle" placeholder="목록에 표시할 대화방의 주제를 입력하세요 ">
+              </p>
+
+              <p>
+                <label for="txt-user-name" class="col-form-label">개설자 등록:</label>
+                <input type="text" class="form-control" id="txt-user-name" placeholder="목록에 표시할 개설자 이름을 입력하세요">
+              </p>
+
+              <p style="display: none;">
+                <label for="txt-room-password" class="col-form-label">회의참여 비밀번호 등록:</label>
+                <input type="password" class="form-control" id="txt-room-password" placeholder="지정된 참여자만 입장하길 원하시면 비밀번호를 설정하세요">
+              </p>
+              
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <p style="position: absolute;left: 20px;">
+            <label class="col-form-label">
+            <input type="checkbox" id="chk-room-password"> 비밀번호설정(선택)</label>
+          </p>
+
+          <button type="button" class="btn" data-dismiss="modal">취소</button>
+          <button type="button" class="btn btn-primary" id="btn-create-room">개설하기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="joinRoomModel" tabindex="-1" role="dialog" aria-labelledby="joinRoomModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content"> 
+        <div class="modal-header">
+          <h5 class="modal-title" id="joinRoomModelLabel">진행 중인 회의에 참가하기</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <p>
+                <label for="txt-roomid-hidden" class="col-form-label">참가할 회의 제목:</label>
+                <input type="text" class="form-control" id="txt-roomid-hidden">
+              </p>
+              
+              <p>
+                <label for="txt-roomTitle-hidden" class="col-form-label">참가 회의 소개:</label>
+                <input type="text" class="form-control" id="txt-roomTitle-hidden"  >
+              </p>
+              
+              <p>
+                <label for="txt-user-name-hidden" class="col-form-label">참가자 이름:</label>
+                <input type="text" class="form-control" id="txt-user-name-hidden" >
+              </p>
+
+              <p style="display: none;">
+                <label for="txt-room-password-hidden" class="col-form-label">방 비밀번호 :</label>
+                <input type="text" class="form-control" id="txt-room-password-hidden">
+              </p>
+            </div>
+          </form>
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn" data-dismiss="modal">취소</button>
+          <button type="button" class="btn btn-primary" id="btn-join-hidden-room">참가하기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="confirm-box-topper" style="display:none;z-index:99999999;top:0;left:0;bottom:0;right:0;width:100%;height:100%;position:fixed;background:#000000ad;"></div>
+  <div id="alert-box" class="modal fade" style="display:none;z-index:999999999999999;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="alert-title">잠깐만요~</h5>
+                        <button type="button" class="close btn-alert-close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="alert-message" class="model-list"></div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <p id="alert-special"></p>
+                        <button class="btn btn-primary btn-alert-close">닫기</button>
+                    </div>
+                </div>
+            </div>
+  </div>
+
+  <div id="confirm-box" class="modal fade" style="display:none;z-index:999999999999999;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirm-title">확인해주세요</h5>
+                        <button type="button" class="close btn-confirm-close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div id="confirm-message" class="modal-body"></div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-confirm-close" id="btn-confirm-close">취소</button>
+                        <button class="btn btn-primary" id="btn-confirm-action">확인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+  <section style="min-height: 400px;">
+    <table class="table">
+      <thead>
+        <tr>
+          <th rowspan="2">no</th>
+          <th>주제</th>
+          <th>개설자</th>
+          <th>참가 </th>
+        </tr>
+        <tr>
+          <th colspan="3">개요 </th>
+        </tr>
+      </thead>
+      <tbody id="rooms-list"><tr><td colspan=9>진행 중인 회의가 없습니다.</td></tr></tbody>
+    </table>
+  </section>
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script src="/webapp/WEB-INF/views/meet/js/popper.min.js"></script>
+  <script src="/webapp/WEB-INF/views/meet/js/bootstrap.min.js"></script>
+
+  <script src="/webapp/WEB-INF/views/dist/RTCMultiConnection.js"></script>  
+  <script src="https://thinknormal.iptime.org:8443/socket.io/socket.io.js"></script>
+  <!-- main -->
+  <script src="/webapp/WEB-INF/views/meet/js/meet_index.js"></script>
+  
+</body>
+</html>

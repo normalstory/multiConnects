@@ -1,0 +1,266 @@
+@charset "UTF-8";
+html,
+body,
+section,
+ul,
+li,
+nav,
+a,
+h1,
+h2 {
+  padding: 0;
+  margin: 0;
+  outline: none;
+  text-shadow: none;
+  box-shadow: none;
+  border-radius: 0;
+  text-decoration: none;
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 17px;
+  line-height: 1.5em;
+  background-color: gainsboro;
+}
+input[disabled],
+button[disabled] {
+  background: transparent !important;
+  color: #dcd7d7 !important;
+  border: 1px solid #dcd7d7 !important;
+  cursor: not-allowed !important;
+  text-shadow: none !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+  outline: none !important;
+}
+
+/* 레이아웃*/
+.con {
+  /* 컨테이너*/
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  height: 44em;
+}
+.item:nth-child(1) {
+  /* 영통*/
+  flex-shrink: 0;
+  width: 20%;
+}
+.item:nth-child(2) {
+  /* 카드보드*/
+  flex-grow: 1;
+}
+
+/* 영통*/
+#other-videos {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  overflow-y: scroll;
+  z-index: 5;
+  margin: 5px;
+}
+video {
+  flex: 1 auto 1;
+  flex-shrink: 0;
+  margin: 0.5em 0.5em 0 0;
+  border: solid;
+}
+
+/* 카드보드*/
+#slide {
+  margin: 1% auto;
+  padding: 2%;
+  background-color: white;
+  border: solid;
+  height: 38em;
+}
+
+/* 메신저*/
+#conversation-panel {
+  text-align: left;
+  overflow: scroll;
+  border-top: 1px solid #e5e5e5;
+}
+.msg_position {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.sendbox {
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+.item_msg {
+  flex: 1 auto 1;
+  margin: 0.5em;
+}
+#key-press {
+  display: inline;
+  text-align: right;
+  display: none;
+  font-size: 10px;
+}
+#key-press.span {
+  vertical-align: middle;
+}
+#key-press.img {
+  height: 11px;
+  vertical-align: middle;
+}
+.message {
+  border-bottom: 1px solid #e5e5e5;
+  padding: 5px 10px;
+}
+.message img,
+.message video,
+.message iframe {
+  max-width: 100%;
+}
+
+#key-press {
+  position: absolute;
+  bottom: 5%;
+}
+#btn-attach-file {
+  width: 35px;
+  vertical-align: middle;
+  cursor: pointer;
+  display: none;
+}
+.emojionearea {
+  margin-top: 1%;
+}
+#txt-chat-message {
+  resize: vertical;
+  margin: 5px;
+  margin-right: 0;
+  min-height: 30px;
+}
+
+#btn-chat-message {
+  margin-top: 1%;
+}
+
+/* 그림판*/
+#widget-container {
+  height: 92%;
+  border: 1px solid #ccc;
+}
+#dataURL-popup {
+  margin-top: 1em;
+}
+#urlSave {
+  width: 100%;
+  background-color: white;
+}
+#link-to-image {
+  display: none;
+}
+
+/* 문서*/
+#editor-container {
+  height: 85.5%;
+}
+#editor [contenteditable] {
+  color: #666;
+  caret-color: red;
+}
+
+#editor .p:after {
+  content: attr(data-before);
+  color: white;
+  background: gray;
+  cursor: pointer;
+}
+
+#editor .p .special:after {
+  content: "";
+  color: blue;
+}
+
+.work_panel {
+  margin: 5px;
+  display: flex;
+  justify-content: space-between;
+  flex-flow: column nowrap;
+}
+
+/* 네비*/
+#pagenavi {
+  width: 25%;
+  background-color: white;
+  border: solid;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  flex-flow: row nowrap;
+  line-height: 0;
+  padding: 0 auto;
+}
+#pagenavi a {
+  margin: 3%;
+}
+i {
+  margin-top: 2.2%;
+  margin-left: 4%;
+}
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.display {
+  opacity: 100;
+  pointer-events: visible;
+}
+.zoomIn {
+  width: 45%;
+}
+
+.zoomOut {
+  width: 33%;
+}
+
+/* 미디어쿼리*/
+@media (max-width: 767px) {
+  #slide {
+    height: 24em;
+  }
+  /* 영통*/
+  .con {
+    flex-direction: column;
+  }
+  .item:nth-child(1) {
+    width: 100%;
+  }
+  #other-videos {
+    justify-content: space-between;
+    flex-flow: row nowrap;
+  }
+  video {
+    width: 33%;
+  }
+  #widget-container {
+    height: 85%;
+  }
+  #editor-container {
+    height: 68%;
+  }
+  #pagenavi {
+    text-align: center;
+    width: 100%;
+    line-height: 1.5em;
+    margin-top: 0.5em;
+  }
+  i {
+    margin-top: 1em;
+  }
+  .ipone_hidden{
+    display: none;
+  }
+}
